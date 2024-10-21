@@ -2,14 +2,14 @@ type Dog {
   id: ID!
   name: String!
   breed: String!
-  bark: String!
+  bark: String
 }
 
 type Cat {
   id: ID!
   name: String!
   age: Int!
-  meow: String!
+  meow: String
 }
 
 type Query {
