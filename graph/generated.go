@@ -71,10 +71,10 @@ type ComplexityRoot struct {
 }
 
 type CatResolver interface {
-	Meow(ctx context.Context, obj *model.Cat) (string, error)
+	Meow(ctx context.Context, obj *model.Cat) (*string, error)
 }
 type DogResolver interface {
-	Bark(ctx context.Context, obj *model.Dog) (string, error)
+	Bark(ctx context.Context, obj *model.Dog) (*string, error)
 }
 type QueryResolver interface {
 	Dogs(ctx context.Context) ([]*model.Dog, error)
@@ -580,14 +580,11 @@ func (ec *executionContext) _Cat_meow(ctx context.Context, field graphql.Collect
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Cat_meow(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -756,14 +753,11 @@ func (ec *executionContext) _Dog_bark(ctx context.Context, field graphql.Collect
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Dog_bark(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -854,14 +848,11 @@ func (ec *executionContext) _Query_dog(ctx context.Context, field graphql.Collec
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*model.Dog)
 	fc.Result = res
-	return ec.marshalNDog2ᚖgqlᚑgenᚑerrorhandlingᚋgraphᚋmodelᚐDog(ctx, field.Selections, res)
+	return ec.marshalODog2ᚖgqlᚑgenᚑerrorhandlingᚋgraphᚋmodelᚐDog(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_dog(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -973,14 +964,11 @@ func (ec *executionContext) _Query_cat(ctx context.Context, field graphql.Collec
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*model.Cat)
 	fc.Result = res
-	return ec.marshalNCat2ᚖgqlᚑgenᚑerrorhandlingᚋgraphᚋmodelᚐCat(ctx, field.Selections, res)
+	return ec.marshalOCat2ᚖgqlᚑgenᚑerrorhandlingᚋgraphᚋmodelᚐCat(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_cat(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -2956,16 +2944,13 @@ func (ec *executionContext) _Cat(ctx context.Context, sel ast.SelectionSet, obj 
 		case "meow":
 			field := field
 
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+			innerFunc := func(ctx context.Context, _ *graphql.FieldSet) (res graphql.Marshaler) {
 				defer func() {
 					if r := recover(); r != nil {
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
 				res = ec._Cat_meow(ctx, field, obj)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
 				return res
 			}
 
@@ -3041,16 +3026,13 @@ func (ec *executionContext) _Dog(ctx context.Context, sel ast.SelectionSet, obj 
 		case "bark":
 			field := field
 
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+			innerFunc := func(ctx context.Context, _ *graphql.FieldSet) (res graphql.Marshaler) {
 				defer func() {
 					if r := recover(); r != nil {
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
 				res = ec._Dog_bark(ctx, field, obj)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
 				return res
 			}
 
@@ -3141,16 +3123,13 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 		case "dog":
 			field := field
 
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+			innerFunc := func(ctx context.Context, _ *graphql.FieldSet) (res graphql.Marshaler) {
 				defer func() {
 					if r := recover(); r != nil {
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
 				res = ec._Query_dog(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
 				return res
 			}
 
@@ -3185,16 +3164,13 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 		case "cat":
 			field := field
 
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+			innerFunc := func(ctx context.Context, _ *graphql.FieldSet) (res graphql.Marshaler) {
 				defer func() {
 					if r := recover(); r != nil {
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
 				res = ec._Query_cat(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
 				return res
 			}
 
@@ -3576,10 +3552,6 @@ func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.Se
 	return res
 }
 
-func (ec *executionContext) marshalNCat2gqlᚑgenᚑerrorhandlingᚋgraphᚋmodelᚐCat(ctx context.Context, sel ast.SelectionSet, v model.Cat) graphql.Marshaler {
-	return ec._Cat(ctx, sel, &v)
-}
-
 func (ec *executionContext) marshalNCat2ᚕᚖgqlᚑgenᚑerrorhandlingᚋgraphᚋmodelᚐCatᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Cat) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
@@ -3632,10 +3604,6 @@ func (ec *executionContext) marshalNCat2ᚖgqlᚑgenᚑerrorhandlingᚋgraphᚋm
 		return graphql.Null
 	}
 	return ec._Cat(ctx, sel, v)
-}
-
-func (ec *executionContext) marshalNDog2gqlᚑgenᚑerrorhandlingᚋgraphᚋmodelᚐDog(ctx context.Context, sel ast.SelectionSet, v model.Dog) graphql.Marshaler {
-	return ec._Dog(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalNDog2ᚕᚖgqlᚑgenᚑerrorhandlingᚋgraphᚋmodelᚐDogᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Dog) graphql.Marshaler {
@@ -4014,6 +3982,20 @@ func (ec *executionContext) marshalOBoolean2ᚖbool(ctx context.Context, sel ast
 	}
 	res := graphql.MarshalBoolean(*v)
 	return res
+}
+
+func (ec *executionContext) marshalOCat2ᚖgqlᚑgenᚑerrorhandlingᚋgraphᚋmodelᚐCat(ctx context.Context, sel ast.SelectionSet, v *model.Cat) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._Cat(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalODog2ᚖgqlᚑgenᚑerrorhandlingᚋgraphᚋmodelᚐDog(ctx context.Context, sel ast.SelectionSet, v *model.Dog) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._Dog(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalOString2ᚖstring(ctx context.Context, v interface{}) (*string, error) {

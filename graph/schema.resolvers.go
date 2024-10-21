@@ -11,21 +11,22 @@ import (
 )
 
 // Meow is the resolver for the meow field.
-func (r *catResolver) Meow(ctx context.Context, obj *model.Cat) (string, error) {
+func (r *catResolver) Meow(ctx context.Context, obj *model.Cat) (*string, error) {
 	if obj.ID == "1" {
-		return "meow unavailable", fmt.Errorf("meow error. cat id: %s cannot meow.", obj.ID)
+		var res *string
+		return res, fmt.Errorf("meow error. cat id: %s cannot meow.", obj.ID)
 	}
 
 	res := fmt.Sprintf("%s the cat says meow.", obj.Name)
 
-	return res, nil
+	return &res, nil
 }
 
 // Bark is the resolver for the bark field.
-func (r *dogResolver) Bark(ctx context.Context, obj *model.Dog) (string, error) {
+func (r *dogResolver) Bark(ctx context.Context, obj *model.Dog) (*string, error) {
 	res := fmt.Sprintf("%s the dog says bark.", obj.Name)
 
-	return res, nil
+	return &res, nil
 }
 
 // Dogs is the resolver for the dogs field.
