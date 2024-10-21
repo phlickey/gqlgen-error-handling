@@ -8,12 +8,15 @@ import (
 	"context"
 	"fmt"
 	"gql-gen-errorhandling/graph/model"
+
+	"github.com/99designs/gqlgen/graphql"
 )
 
 // Meow is the resolver for the meow field.
 func (r *catResolver) Meow(ctx context.Context, obj *model.Cat) (string, error) {
 	if obj.ID == "1" {
-		return "meow unavailable", fmt.Errorf("meow error. cat id: %s cannot meow.", obj.ID)
+		graphql.AddError(ctx, fmt.Errorf("meow error. cat id: %s cannot meow.", obj.ID))
+		return "meow unavailable", nil
 	}
 
 	res := fmt.Sprintf("%s the cat says meow.", obj.Name)
